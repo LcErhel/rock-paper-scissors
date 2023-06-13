@@ -1,24 +1,119 @@
 "use strict"
 
-function getPlayerChoice() {
-    let choice = prompt("Rock/Paper/Scissor? || 0/1/2");
-    if (choice.toLowerCase() == "rock" || choice == 0) {
-        return 0;
-    } else if (choice.toLowerCase() == "paper" || choice == 1) {
-        return 1;
-    } else if (choice.toLowerCase() == "scissors" || choice == 2) {
-        return 2;
-    } else {
-        return console.error("Invalid input");
+let rounds = 0;
+let playerScore = 0;
+let computerScore = 0;
+let executed = false;
+
+const btnRock = document.querySelector(".rock");
+const btnPaper = document.querySelector(".paper");
+const btnScissors = document.querySelector(".scissors");
+
+btnRock.addEventListener("click", () => {
+    if(executed == false) {
+        playRound(0);
     }
-}
+});
+btnPaper.addEventListener("click", () => {
+    if(executed == false) {
+        playRound(1);
+    }
+});
+btnScissors.addEventListener("click", () => {
+    if(executed == false) {
+        playRound(2);
+    }
+});
 
 function getComputerChoice() {
     return Math.floor(Math.random() * 3);
 }
 
-function playRound() {
-    let playerChoice = getPlayerChoice();
+function roundResult(result) {
+
+    console.log(result);
+    if (result == 2) {
+        ++rounds;
+    } else if (result == 0) {
+        ++computerScore;
+        ++rounds;
+    } else if (result == 1) {
+        ++playerScore;
+        ++rounds;
+    }
+
+    console.log(`Rounds: ${rounds}`);
+    console.log(`Score: ${playerScore} / ${computerScore}`);
+
+    if (playerScore >= 3) {
+        console.log("You've won!!!");
+        executed = true;
+        return;
+    } else if (computerScore >= 3) {
+        console.log("You've lost!!!");
+        executed = true;
+        return;
+    }
+}
+
+function playRound(playerChoice) {
+    let computerChoice = getComputerChoice();
+    let result;
+
+    if (playerChoice == 0 && computerChoice == 0) {
+        console.log("Draw! rock/rock");
+        result = 2;
+    } else if (playerChoice == 1 && computerChoice == 1) {
+        console.log("Draw! paper/paper");
+        result = 2;
+    } else if (playerChoice == 2 && computerChoice == 2) {
+        console.log("Draw! scissors/scissors")
+        result = 2;
+    } else if (playerChoice == 0 && computerChoice == 2) {
+        console.log("You win! rock/scissors");
+        result = 1;
+    } else if (playerChoice == 1 && computerChoice == 0) {
+        console.log("You win! paper/rock");
+        result = 1;
+    } else if (playerChoice == 2 && computerChoice == 1) {
+        console.log("You win! scissors/paper");
+        result = 1;
+    } else if (playerChoice == 2 && computerChoice == 0) {
+        console.log("You lose! scissors/rock");
+        result = 0;
+    } else if (playerChoice == 0 && computerChoice == 1) {
+        console.log("You lose! rock/paper");
+        result = 0;
+    } else if (playerChoice == 1 && computerChoice == 2) {
+        console.log("You lose! paper/scissors");
+        result = 0;
+    } else {
+        console.error("broken playRound()");
+    }
+    roundResult(result);
+}
+
+//btnPaper.addEventListener("click", playRound(1));
+//btnScissors.addEventListener("click", playRound(2));
+/*
+function getPlayerChoice() {
+    const btnRock = document.querySelector(".rock");
+    const btnPaper = document.querySelector(".paper");
+    const btnScissors = document.querySelector(".scissors");
+
+    btnRock.addEventListener("click", playRound(0));
+    btnPaper.addEventListener("click", playRound(1));
+    btnScissors.addEventListener("click", playRound(2));
+}
+*/
+/*
+
+function getComputerChoice() {
+    return Math.floor(Math.random() * 3);
+}
+
+function playRound(choice) {
+    let playerChoice = choice;
     let computerChoice = getComputerChoice();
 
     if (playerChoice == 0 && computerChoice == 0) {
@@ -81,4 +176,5 @@ function playFullGame() {
     }
 }
 
-playFullGame();
+getPlayerChoice();
+*/
