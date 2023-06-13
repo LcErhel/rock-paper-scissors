@@ -5,6 +5,9 @@ let playerScore = 0;
 let computerScore = 0;
 let executed = false;
 
+const showCurrentRound = document.querySelector(".currentRound");
+const showGameResult = document.querySelector(".gameResult");
+
 const btnRock = document.querySelector(".rock");
 const btnPaper = document.querySelector(".paper");
 const btnScissors = document.querySelector(".scissors");
@@ -25,6 +28,11 @@ btnScissors.addEventListener("click", () => {
     }
 });
 
+const btnReset = document.querySelector(".reset");
+btnReset.addEventListener("click", () => {
+    resetGame();
+});
+
 function getComputerChoice() {
     return Math.floor(Math.random() * 3);
 }
@@ -34,31 +42,31 @@ function playRound(playerChoice) {
     let result;
 
     if (playerChoice == 0 && computerChoice == 0) {
-        console.log("Draw! rock/rock");
+        showCurrentRound.innerHTML = "Draw! rock/rock";
         result = 2;
     } else if (playerChoice == 1 && computerChoice == 1) {
-        console.log("Draw! paper/paper");
+        showCurrentRound.innerHTML = "Draw! paper/paper";
         result = 2;
     } else if (playerChoice == 2 && computerChoice == 2) {
-        console.log("Draw! scissors/scissors");
+        showCurrentRound.innerHTML = "Draw! scissors/scissors";
         result = 2;
     } else if (playerChoice == 0 && computerChoice == 2) {
-        console.log("You win! rock/scissors");
+        showCurrentRound.innerHTML = "You win! rock/scissors";
         result = 1;
     } else if (playerChoice == 1 && computerChoice == 0) {
-        console.log("You win! paper/rock");
+        showCurrentRound.innerHTML = "You win! paper/rock";
         result = 1;
     } else if (playerChoice == 2 && computerChoice == 1) {
-        console.log("You win! scissors/paper");
+        showCurrentRound.innerHTML = "You win! scissors/paper";
         result = 1;
     } else if (playerChoice == 2 && computerChoice == 0) {
-        console.log("You lose! scissors/rock");
+        showCurrentRound.innerHTML = "You lose! scissors/rock";
         result = 0;
     } else if (playerChoice == 0 && computerChoice == 1) {
-        console.log("You lose! rock/paper");
+        showCurrentRound.innerHTML = "You lose! rock/paper";
         result = 0;
     } else if (playerChoice == 1 && computerChoice == 2) {
-        console.log("You lose! paper/scissors");
+        showCurrentRound.innerHTML = "You lose! paper/scissors";
         result = 0;
     } else {
         console.error("broken playRound()");
@@ -79,18 +87,28 @@ function roundResult(result) {
 
     console.log(`Rounds: ${rounds}`);
     console.log(`Score: ${playerScore} / ${computerScore}`);
+    showCurrentRound.innerHTML += ` || Rounds: ${rounds} || Score: ${playerScore} / ${computerScore}`;
 
     gameResult();
 }
 
 function gameResult() {
     if (playerScore >= 3) {
-        console.log("You've won!!!");
         executed = true;
+        showGameResult.innerHTML = "You've won!!!"
         return;
     } else if (computerScore >= 3) {
-        console.log("You've lost!!!");
         executed = true;
+        showGameResult.innerHTML = "You've lost!!!";
         return;
     }
+}
+
+function resetGame() {
+    rounds = 0;
+    playerScore = 0;
+    computerScore = 0;
+    executed = false;
+    showCurrentRound.innerHTML = "";
+    showGameResult.innerHTML = "";
 }
