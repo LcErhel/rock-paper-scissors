@@ -5,3 +5,9 @@ function getComputerChoice() {
     console.log(computerChoice);
     return computerChoice;
 }
+
+function getHumanChoice() {
+    let humanChoice = prompt("1 - rock, 2 - paper, 3 - scissors");
+    console.log(humanChoice);
+    return humanChoice;
+}
