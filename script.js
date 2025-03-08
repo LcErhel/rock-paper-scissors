@@ -60,4 +60,11 @@ function playGame() {
         console.log("Draw! Final score: " + computerScore + ":" + humanScore)
     }
     console.log("rounds: " + round);
+    reset();
+}
+
+function reset() {
+    computerScore = 0;
+    humanScore = 0;
+    round = 0;
 }
