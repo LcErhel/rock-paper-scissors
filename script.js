@@ -17,6 +17,11 @@ function getHumanChoice() {
 function playRound(computerChoice = getComputerChoice(), humanChoice = getHumanChoice()) {
     console.log(computerChoice, humanChoice);
 
+    if(humanChoice == "" || humanChoice == null) {
+        round = 5;
+        return console.log("cancelled");
+    }
+
     if(!Number.isInteger(+humanChoice)) {
         return console.log("not a number")
     }
