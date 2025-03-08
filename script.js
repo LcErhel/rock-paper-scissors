@@ -13,9 +13,7 @@ function getHumanChoice() {
     return humanChoice;
 }
 
-function playRound(computerChoice, humanChoice) {
-    computerChoice = getComputerChoice();
-    humanChoice = getHumanChoice();
+function playRound(computerChoice = getComputerChoice(), humanChoice = getHumanChoice()) {
     console.log(computerChoice, humanChoice);
 
     if(!Number.isInteger(+humanChoice)) {
