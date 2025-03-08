@@ -1,7 +1,8 @@
 console.log("check");
 
-let humanScore = 0;
 let computerScore = 0;
+let humanScore = 0;
+let round = 0;
 
 function getComputerChoice() {
     let computerChoice = Math.floor(Math.random() * 3) + 1;
@@ -25,19 +26,38 @@ function playRound(computerChoice = getComputerChoice(), humanChoice = getHumanC
     }
 
     if(computerChoice == humanChoice) {
+        round++
         console.log("draw");
     } else if (computerChoice == 1 && humanChoice == 2) {
         console.log("win");
+        round++
         humanScore++;
     } else if (computerChoice == 2 && humanChoice == 3) {
         console.log("win");
+        round++
         humanScore++;
     } else if (computerChoice == 3 && humanChoice == 1) {
         console.log("win");
+        round++
         humanScore++;
     } else {
+        round++
         computerScore++;
         console.log("lose");
     }
-    console.log(computerScore, humanScore);
+}
+
+function playGame() {
+    for(round = 0; round < 5;) {
+        playRound();
+    }
+
+    if(computerScore > humanScore) {
+        console.log("You lose! Final score: " + computerScore + ":" + humanScore);
+    } else if (computerScore < humanScore) {
+        console.log("You win! Final score: " + computerScore + ":" + humanScore)
+    } else {
+        console.log("Draw! Final score: " + computerScore + ":" + humanScore)
+    }
+    console.log("rounds: " + round);
 }
