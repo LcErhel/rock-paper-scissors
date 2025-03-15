@@ -1,4 +1,4 @@
-console.log("check");
+"use strict";
 
 let computerScore = 0;
 let humanScore = 0;
@@ -14,62 +14,82 @@ function getHumanChoice() {
     return humanChoice;
 }
 
-function playRound(computerChoice = getComputerChoice(), humanChoice = getHumanChoice()) {
-    console.log(computerChoice, humanChoice);
-
-    if(humanChoice == "" || humanChoice == null) {
-        round = 5;
-        return console.log("cancelled");
-    }
-
-    if(!Number.isInteger(+humanChoice)) {
-        return console.log("not a number")
-    }
-    
-    if(humanChoice >= 4 || humanChoice <= 0) {
-        return console.log("invalid number");
-    }
+function playRound(humanChoice) {
+    let computerChoice = getComputerChoice();
 
     if(computerChoice == humanChoice) {
         round++
-        console.log("draw");
     } else if (computerChoice == 1 && humanChoice == 2) {
-        console.log("win");
         round++
         humanScore++;
     } else if (computerChoice == 2 && humanChoice == 3) {
-        console.log("win");
         round++
         humanScore++;
     } else if (computerChoice == 3 && humanChoice == 1) {
-        console.log("win");
         round++
         humanScore++;
     } else {
         round++
         computerScore++;
-        console.log("lose");
     }
 }
 
-function playGame() {
-    for(round = 0; round < 5;) {
-        playRound();
-    }
+const rock = document.querySelector(".rock");
+const paper = document.querySelector(".paper");
+const scissors = document.querySelector(".scissors");
+const showRound = document.querySelector(".round");
+const showScore = document.querySelector(".score");
+const showResult = document.querySelector(".result");
+const resetBtn = document.querySelector(".reset");
 
-    if(computerScore > humanScore) {
-        console.log("You lose! Final score: " + computerScore + ":" + humanScore);
-    } else if (computerScore < humanScore) {
-        console.log("You win! Final score: " + computerScore + ":" + humanScore)
-    } else {
-        console.log("Draw! Final score: " + computerScore + ":" + humanScore)
-    }
-    console.log("rounds: " + round);
+rock.addEventListener("click", () => {
+    playRound(1);
+    refresh();
+    result();
+});
+
+paper.addEventListener("click", () => {
+    playRound(2);
+    refresh();
+    result();
+});
+
+scissors.addEventListener("click", () => {
+    playRound(3);
+    refresh();
+    result();
+});
+
+resetBtn.addEventListener("click", () => {
     reset();
+    refresh();
+});
+
+function result() {
+    if(humanScore >= 5 || computerScore >= 5) {
+        rock.disabled = true;
+        paper.disabled = true;
+        scissors.disabled = true;
+
+        if(humanScore >= 5) {
+            showResult.textContent = "result: player won!";
+        } else {
+            showResult.textContent = "result: computer won!";
+        }
+    }
 }
 
 function reset() {
     computerScore = 0;
     humanScore = 0;
     round = 0;
+    rock.disabled = false;
+    paper.disabled = false;
+    scissors.disabled = false;
+}
+
+function refresh() {
+    showRound.textContent = "total rounds: " + round;
+    showScore.textContent = "computer = " + computerScore + ", human = " + humanScore;
+    showResult.textContent = "result:";
 }
